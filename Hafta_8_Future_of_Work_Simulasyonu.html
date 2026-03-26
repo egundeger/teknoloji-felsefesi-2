@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hafta 8: Future of Work Simülasyonu - AI Collaboration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0891b2;
+            --primary-dark: #0e7490;
+            --secondary: #6366f1;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --darker: #020617;
+            --bg-light: #f0f9ff;
+            --bg-white: #ffffff;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --future: #06b6d4;
+            --pharmacy: #8b5cf6;
+            --nutrition: #22c55e;
+            --nursing: #ec4899;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f172a 0%, #0891b2 50%, #6366f1 100%);
+            color: white;
+            padding: 2.5rem 0;
+            box-shadow: 0 4px 20px rgba(8, 145, 178, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            margin-top: 0.5rem;
+        }
+
+        .future-quote {
+            font-style: italic;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+        }
+
+        .instructor-info {
+            background: rgba(255,255,255,0.15);
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-container {
+            background: rgba(255,255,255,0.2);
+            height: 5px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--success) 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-tab:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--success) 100%);
+            color: white;
+            font-weight: 700;
+        }
+
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .section {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: none;
+            border: 1px solid var(--border);
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 2px 6px rgba(8, 145, 178, 0.1);
+        }
+
+        .card.pharmacy {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            border-left-color: var(--pharmacy);
+        }
+
+        .card.nutrition {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-color: var(--nutrition);
+        }
+
+        .card.nursing {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            border-left-color: var(--nursing);
+        }
+
+        .card.scenario {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left-color: var(--accent);
+        }
+
+        .card.future {
+            background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+            border-left-color: var(--future);
+        }
+
+        .card.warning {
+            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+            border-left-color: var(--danger);
+        }
+
+        .card.success {
+            background: linear-gradient(135deg, #f0fdf4 0%, #bbf7d0 100%);
+            border-left-color: var(--success);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .info-box {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .info-box.future {
+            background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+            border-color: var(--future);
+        }
+
+        .info-box.warning {
+            background: #fffbeb;
+            border-color: var(--warning);
+        }
+
+        .info-box.success {
+            background: #f0fdf4;
+            border-color: var(--success);
+        }
+
+        .info-box.info {
+            background: #eff6ff;
+            border-color: var(--info);
+        }
+
+        .check-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .check-list li {
+            padding: 0.75rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .check-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-list li:before {
+            content: "🚀";
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .code-block {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            position: relative;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            border: 1px solid #334155;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(8, 145, 178, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--pharmacy) 100%);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+            position: relative;
+            border-left: 5px solid var(--accent);
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            color: var(--accent);
+            opacity: 0.5;
+        }
+
+        .quote-author {
+            margin-top: 1rem;
+            font-style: normal;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .scenario-box {
+            background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .scenario-box::before {
+            content: "🎭 SENARYO";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .role-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .role-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .role-card.human {
+            border-color: var(--info);
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .role-card.ai {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+
+        .role-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px dashed var(--border);
+        }
+
+        .role-icon {
+            font-size: 2rem;
+        }
+
+        .role-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .dialogue-container {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .dialogue-message {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin: 0.75rem 0;
+            max-width: 85%;
+            position: relative;
+        }
+
+        .dialogue-message.human {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .dialogue-message.ai {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+
+        .dialogue-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .timer-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--dark);
+            font-family: 'Courier New', monospace;
+        }
+
+        .timer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--primary);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0.25rem;
+        }
+
+        .badge.pharmacy {
+            background: var(--pharmacy);
+            color: white;
+        }
+
+        .badge.nutrition {
+            background: var(--nutrition);
+            color: white;
+        }
+
+        .badge.nursing {
+            background: var(--nursing);
+            color: white;
+        }
+
+        .badge.ai {
+            background: var(--primary);
+            color: white;
+        }
+
+        .collapsible {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .collapsible-header:hover {
+            background: var(--border);
+        }
+
+        .collapsible-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .collapsible.open .collapsible-content {
+            max-height: 1000px;
+            padding: 1rem 1.5rem;
+        }
+
+        .collapsible-arrow {
+            transition: transform 0.3s;
+        }
+
+        .collapsible.open .collapsible-arrow {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .section {
+                padding: 1.5rem;
+            }
+            .dialogue-message {
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>🚀 Hafta 8: Future of Work Simülasyonu</h1>
+                    <p class="header-subtitle">AI Collaboration Scenarios & Role-Play Exercises</p>
+                    <p class="future-quote">"The future belongs to those who learn more skills and combine them in creative ways." — Robert Greene</p>
+                </div>
+                <div class="instructor-info">
+                    👨‍🏫 Dr. Ersin Gündeğer<br>
+                    📧 ersin.gundeger@istun.edu.tr
+                </div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <nav class="nav-tabs">
+                <button class="nav-tab active" onclick="showSection('intro')">🎯 Giriş</button>
+                <button class="nav-tab" onclick="showSection('models')">🔄 İşbirliği Modelleri</button>
+                <button class="nav-tab" onclick="showSection('pharmacy')">💊 Eczacı + AI</button>
+                <button class="nav-tab" onclick="showSection('nutrition')">🥗 Diyetisyen + AI</button>
+                <button class="nav-tab" onclick="showSection('nursing')">🏥 Hemşire + AI</button>
+                <button class="nav-tab" onclick="showSection('simulation')">🎭 Simülasyon</button>
+                <button class="nav-tab" onclick="showSection('discussion')">💭 Tartışma</button>
+                <button class="nav-tab" onclick="showSection('homework')">📚 Ödev</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+
+            <!-- INTRO SECTION -->
+            <section id="intro" class="section active">
+                <div class="section-header">
+                    <span class="section-icon">🌍</span>
+                    <div>
+                        <h2 class="section-title">İşin Geleceği: AI ile Çalışmak</h2>
+                        <p class="section-subtitle">2025 ve Ötesi: Sağlık Profesyonelleri İçin Yeni Gerçeklik</p>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    "AI won't replace doctors. But doctors who use AI will replace doctors who don't."
+                    <div class="quote-author">— Dr. Eric Topol, The Creative Destruction of Medicine</div>
+                </div>
+
+                <div class="info-box future">
+                    <h3>🎯 Bu Dersin Amacı</h3>
+                    <p style="margin-top: 1rem;">
+                        Bugün <strong>simülasyon ve role-play</strong> ile AI'ın sağlık sektöründeki gerçek uygulamalarını 
+                        deneyimleyeceğiz. Pasif öğrenme yerine <strong>aktif katılım</strong> — siz AI ile çalışan 
+                        profesyonelleri canlandıracaksınız.
+                    </p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="stat-card" style="border-color: var(--pharmacy);">
+                        <div class="stat-number">85%</div>
+                        <div class="stat-label">Eczacıların AI kullanacağı tahmin ediliyor (2030)</div>
+                    </div>
+                    <div class="stat-card" style="border-color: var(--nutrition);">
+                        <div class="stat-number">73%</div>
+                        <div class="stat-label">Beslenme uzmanları AI destekli planlama istiyor</div>
+                    </div>
+                    <div class="stat-card" style="border-color: var(--nursing);">
+                        <div class="stat-number">91%</div>
+                        <div class="stat-label">Hemşireler AI'ın iş yükünü azaltacağına inanıyor</div>
+                    </div>
+                </div>
+
+                <div class="card future">
+                    <h3 class="card-title">🔮 2030'da Bir Gün: Sabah Rutini</h3>
+                    <div style="margin-top: 1rem; line-height: 2;">
+                        <p><strong>07:00</strong> — AI asistanınız günlük briefinginizi hazırladı: 23 hasta, 3 kritik vaka, 2 yeni ilaç etkileşimi uyarısı.</p>
+                        <p><strong>07:30</strong> — Kahvaltıda AI özetleri okuyorsunuz: Dünün lab sonuçları, bugünkü öncelikler.</p>
+                        <p><strong>08:00</strong> — İlk hasta görüşmesi. AI gerçek zamanlı notlar alıyor, ilgili literatürü çekiyor.</p>
+                        <p><strong>08:45</strong> — AI bir ilaç etkileşimi tespit etti: "Dikkat: Bu kombinasyon QT uzamasına neden olabilir."</p>
+                        <p><strong>09:00</strong> — Siz karar veriyorsunuz. AI öneriyor, insan onaylıyor.</p>
+                    </div>
+                </div>
+
+                <div class="timer-box">
+                    <h3>⏱️ Bugünkü Ders Planı</h3>
+                    <div class="timer-display" id="intro-timer">02:00:00</div>
+                    <p style="margin-top: 0.5rem; color: var(--text-gray);">Toplam Ders Süresi</p>
+                </div>
+
+                <h3 style="margin-top: 2rem; color: var(--primary);">📋 Bugün Ne Yapacağız?</h3>
+                <ul class="check-list" style="margin-top: 1rem;">
+                    <li><strong>İşbirliği Modelleri:</strong> AI ile çalışmanın 4 farklı modeli</li>
+                    <li><strong>Role-Play #1:</strong> Eczacı + AI — İlaç etkileşimi senaryosu</li>
+                    <li><strong>Role-Play #2:</strong> Diyetisyen + AI — Kişiselleştirilmiş beslenme planı</li>
+                    <li><strong>Role-Play #3:</strong> Hemşire + AI — Hasta takip sistemi</li>
+                    <li><strong>Simülasyon:</strong> Kendi senaryonuzu yazın ve deneyin</li>
+                    <li><strong>Tartışma:</strong> İnsan mı, AI mı, ikisi birlikte mi?</li>
+                </ul>
+
+                <div class="section-nav">
+                    <span></span>
+                    <button class="btn btn-primary" onclick="showSection('models')">İşbirliği Modelleri →</button>
+                </div>
+            </section>
+
+            <!-- MODELS SECTION -->
+            <section id="models" class="section">
+                <div class="section-header">
+                    <span class="section-icon">🔄</span>
+                    <div>
+                        <h2 class="section-title">AI İşbirliği Modelleri</h2>
+                        <p class="section-subtitle">İnsan + AI: Nasıl Birlikte Çalışırız?</p>
+                    </div>
+                </div>
+
+                <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                    AI ile çalışmanın tek bir yolu yok. Duruma, göreve ve uzmanlık seviyesine göre 
+                    farklı işbirliği modelleri kullanılabilir. İşte 4 temel model:
+                </p>
+
+                <div class="grid-2">
+                    <div class="card" style="border-color: #3b82f6;">
+                        <h3 class="card-title">🔧 Model 1: AI as Tool (Araç)</h3>
+                        <p><strong>Açıklama:</strong> AI pasif bir araçtır. Siz soru sorar, o cevaplar.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Örnek:</strong> "Bu ilacın yan etkileri neler?"</p>
+                        <p style="margin-top: 0.5rem;"><strong>Kontrol:</strong> 🧑 %100 İnsan</p>
+                        <div style="margin-top: 1rem; padding: 0.75rem; background: #eff6ff; border-radius: 8px;">
+                            <strong>Ne Zaman?</strong> Basit bilgi sorgulama, hızlı cevaplar
+                        </div>
+                    </div>
+
+                    <div class="card" style="border-color: #10b981;">
+                        <h3 class="card-title">💡 Model 2: AI as Assistant (Asistan)</h3>
+                        <p><strong>Açıklama:</strong> AI proaktif önerilerde bulunur, siz onaylarsınız.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Örnek:</strong> "Bu hastanın lab değerlerine göre şu testleri öneririm..."</p>
+                        <p style="margin-top: 0.5rem;"><strong>Kontrol:</strong> 🧑 %80 İnsan / 🤖 %20 AI</p>
+                        <div style="margin-top: 1rem; padding: 0.75rem; background: #f0fdf4; border-radius: 8px;">
+                            <strong>Ne Zaman?</strong> Rutin kararlar, öneri sistemleri
+                        </div>
+                    </div>
+
+                    <div class="card" style="border-color: #f59e0b;">
+                        <h3 class="card-title">🤝 Model 3: AI as Collaborator (Ortak)</h3>
+                        <p><strong>Açıklama:</strong> AI ve insan birlikte düşünür, tartışır, karar alır.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Örnek:</strong> "Bu vakayı birlikte analiz edelim. Ben şunu düşünüyorum, sen?"</p>
+                        <p style="margin-top: 0.5rem;"><strong>Kontrol:</strong> 🧑 %50 İnsan / 🤖 %50 AI</p>
+                        <div style="margin-top: 1rem; padding: 0.75rem; background: #fffbeb; border-radius: 8px;">
+                            <strong>Ne Zaman?</strong> Kompleks vakalar, differential diagnosis
+                        </div>
+                    </div>
+
+                    <div class="card" style="border-color: #ef4444;">
+                        <h3 class="card-title">🎯 Model 4: AI as Supervisor (Denetleyici)</h3>
+                        <p><strong>Açıklama:</strong> AI kararları denetler, uyarı verir, hataları yakalar.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Örnek:</strong> "⚠️ Bu ilaç kombinasyonu tehlikeli. Onaylıyor musunuz?"</p>
+                        <p style="margin-top: 0.5rem;"><strong>Kontrol:</strong> 🧑 Karar / 🤖 Denetim</p>
+                        <div style="margin-top: 1rem; padding: 0.75rem; background: #fef2f2; border-radius: 8px;">
+                            <strong>Ne Zaman?</strong> Güvenlik kritik işlemler, ilaç dozajı
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <h3>⚠️ Kritik Soru: Hangisi "Doğru" Model?</h3>
+                    <p style="margin-top: 1rem;">
+                        <strong>Cevap:</strong> Hepsi! Doğru model <em>duruma bağlıdır</em>. Bir eczacı basit bir bilgi sorgusunda 
+                        Model 1 kullanırken, kompleks bir ilaç etkileşiminde Model 3'e geçebilir. 
+                        <strong>Esneklik anahtardır.</strong>
+                    </p>
+                </div>
+
+                <div class="scenario-box">
+                    <h3 style="margin-top: 0.5rem;">🎭 Mini Senaryo: Model Geçişi</h3>
+                    <div style="margin-top: 1rem;">
+                        <p><strong>Durum:</strong> Bir hasta size geldi. 65 yaşında, diyabet, hipertansiyon, yeni reçete edilmiş antibiyotik.</p>
+                        <p style="margin-top: 1rem;"><strong>Adım 1 (Model 1 - Araç):</strong> "Bu antibiyotiğin diyabet ilaçlarıyla etkileşimi var mı?"</p>
+                        <p><strong>Adım 2 (Model 4 - Denetleyici):</strong> AI uyarı veriyor: "⚠️ Metformin + Ciprofloxacin = Hipoglisemi riski"</p>
+                        <p><strong>Adım 3 (Model 3 - Ortak):</strong> "Bu hasta için alternatif antibiyotik seçeneklerini tartışalım."</p>
+                        <p><strong>Adım 4 (Model 2 - Asistan):</strong> AI öneriyor: "Amoxicillin daha güvenli olabilir. Onaylıyor musunuz?"</p>
+                    </div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-outline" onclick="showSection('intro')">← Geri</button>
+                    <button class="btn btn-primary" onclick="showSection('pharmacy')">Eczacı + AI →</button>
+                </div>
+            </section>
+
+            <!-- PHARMACY ROLE-PLAY -->
+            <section id="pharmacy" class="section">
+                <div class="section-header">
+                    <span class="section-icon">💊</span>
+                    <div>
+                        <h2 class="section-title">Role-Play #1: Eczacı + AI</h2>
+                        <p class="section-subtitle">İlaç Etkileşimi Senaryosu</p>
+                    </div>
+                </div>
+
+                <div class="info-box" style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-color: var(--pharmacy);">
+                    <h3>🎭 Senaryo Özeti</h3>
+                    <p style="margin-top: 1rem;">
+                        Siz bir eczacısınız. Hastane bilgi sistemine entegre bir AI asistanınız var. 
+                        Bir hasta yeni bir reçeteyle geliyor. AI sisteminiz gerçek zamanlı olarak ilaç 
+                        etkileşimlerini kontrol ediyor.
+                    </p>
+                </div>
+
+                <div class="scenario-box">
+                    <h3 style="margin-top: 0.5rem;">📋 Hasta Bilgileri</h3>
+                    <div class="grid-2" style="margin-top: 1rem;">
+                        <div>
+                            <p><strong>Ad:</strong> Mehmet Y.</p>
+                            <p><strong>Yaş:</strong> 72</p>
+                            <p><strong>Kronik Hastalıklar:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Tip 2 Diyabet (15 yıl)</li>
+                                <li>Hipertansiyon</li>
+                                <li>Atriyal Fibrilasyon</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p><strong>Mevcut İlaçlar:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Metformin 1000mg 2x1</li>
+                                <li>Lisinopril 10mg 1x1</li>
+                                <li>Warfarin 5mg 1x1</li>
+                            </ul>
+                            <p style="margin-top: 1rem;"><strong>Yeni Reçete:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li style="color: var(--danger); font-weight: bold;">Clarithromycin 500mg 2x1 (7 gün)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; color: var(--pharmacy);">💬 Diyalog Simülasyonu</h3>
+                
+                <div class="dialogue-container">
+                    <div class="dialogue-message ai">
+                        <div class="dialogue-label">🤖 AI Asistan</div>
+                        ⚠️ <strong>KRİTİK UYARI:</strong> Bu reçetede ciddi bir ilaç etkileşimi tespit edildi.
+                        <br><br>
+                        <strong>Clarithromycin + Warfarin:</strong> Kanama riski %300 artış. Clarithromycin, CYP3A4 enzimini 
+                        inhibe ederek Warfarin metabolizmasını yavaşlatır. INR değerlerinde tehlikeli yükselme beklenir.
+                    </div>
+                    
+                    <div class="dialogue-message human">
+                        <div class="dialogue-label">👨‍⚕️ Eczacı (Siz)</div>
+                        Alternatif antibiyotik önerebilir misin? Hastanın enfeksiyonu için uygun, Warfarin ile 
+                        güvenli bir seçenek?
+                    </div>
+                    
+                    <div class="dialogue-message ai">
+                        <div class="dialogue-label">🤖 AI Asistan</div>
+                        <strong>Önerilen Alternatifler:</strong>
+                        <br><br>
+                        1. <strong>Azithromycin 500mg:</strong> Daha düşük CYP3A4 etkileşimi, ancak QT uzaması riski var.
+                        <br>
+                        2. <strong>Amoxicillin 500mg:</strong> Warfarin ile minimal etkileşim, güvenli seçenek.
+                        <br>
+                        3. <strong>Doxycycline 100mg:</strong> Warfarin ile orta düzey etkileşim, INR takibi gerekir.
+                        <br><br>
+                        <em>Hastanın atriyal fibrilasyonu göz önünde bulundurulduğunda, Amoxicillin en güvenli seçenek olabilir. 
+                        Ancak enfeksiyonun tipi ve şiddeti de değerlendirilmeli.</em>
+                    </div>
+                    
+                    <div class="dialogue-message human">
+                        <div class="dialogue-label">👨‍⚕️ Eczacı (Siz)</div>
+                        Doktorla görüşmem gerekiyor. Bu uyarıyı ve önerilerini rapora ekle. 
+                        Ayrıca hastanın son INR değerini çekebilir misin?
+                    </div>
+                    
+                    <div class="dialogue-message ai">
+                        <div class="dialogue-label">🤖 AI Asistan</div>
+                        ✅ Rapor hazırlandı ve doktora gönderilmek üzere kaydedildi.
+                        <br><br>
+                        <strong>Son INR Değeri:</strong> 2.8 (3 gün önce)
+                        <br>
+                        <strong>Hedef Aralık:</strong> 2.0-3.0
+                        <br><br>
+                        <em>INR şu an hedef aralığın üst sınırında. Clarithromycin eklenirse 4.0+ beklenir, 
+                        bu da aktif kanama riski demektir.</em>
+                    </div>
+                </div>
+
+                <div class="timer-box">
+                    <h3>⏱️ Şimdi Sıra Sizde: Role-Play Zamanı!</h3>
+                    <div class="timer-display" id="pharmacy-timer">10:00</div>
+                    <div class="timer-buttons">
+                        <button class="btn btn-primary" onclick="startTimer('pharmacy', 600)">▶️ Başlat</button>
+                        <button class="btn btn-outline" onclick="resetTimer('pharmacy', 600)">🔄 Sıfırla</button>
+                    </div>
+                </div>
+
+                <div class="card pharmacy">
+                    <h3 class="card-title">✍️ Aktivite: Kendi Diyalogunuzu Yazın</h3>
+                    <p>Aşağıdaki senaryoyu ChatGPT veya Claude'da deneyin:</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this, 'pharmacy-prompt')">📋 Kopyala</button>
+                        <pre id="pharmacy-prompt">Sen bir hastane eczane AI asistanısın. Görevin:
+1. İlaç etkileşimlerini kontrol etmek
+2. Kritik uyarılar vermek
+3. Alternatif öneriler sunmak
+4. Eczacının sorularını yanıtlamak
+
+Hasta: 68 yaşında kadın
+Mevcut ilaçlar: Atorvastatin 40mg, Amlodipine 5mg, Aspirin 100mg
+Yeni reçete: Itraconazole 200mg (tırnak mantarı için)
+
+Lütfen bu kombinasyonu analiz et ve eczacıya profesyonel bir rapor sun.</pre>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <h3>✅ Öğrenme Çıktıları</h3>
+                    <ul class="check-list" style="margin-top: 1rem;">
+                        <li>AI'ın "supervisor" rolünü görmek (Model 4)</li>
+                        <li>İnsan-AI işbirliğinde son kararın insanda olması</li>
+                        <li>AI'ın bilgi desteği sağlaması, karar vermemesi</li>
+                        <li>Kritik durumlarda AI uyarılarının değeri</li>
+                    </ul>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-outline" onclick="showSection('models')">← Geri</button>
+                    <button class="btn btn-primary" onclick="showSection('nutrition')">Diyetisyen + AI →</button>
+                </div>
+            </section>
+
+            <!-- NUTRITION ROLE-PLAY -->
+            <section id="nutrition" class="section">
+                <div class="section-header">
+                    <span class="section-icon">🥗</span>
+                    <div>
+                        <h2 class="section-title">Role-Play #2: Diyetisyen + AI</h2>
+                        <p class="section-subtitle">Kişiselleştirilmiş Beslenme Planı</p>
+                    </div>
+                </div>
+
+                <div class="info-box" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-color: var(--nutrition);">
+                    <h3>🎭 Senaryo Özeti</h3>
+                    <p style="margin-top: 1rem;">
+                        Siz bir diyetisyensiniz. AI destekli bir beslenme planlama yazılımı kullanıyorsunuz. 
+                        Hasta verilerini giriyorsunuz, AI kişiselleştirilmiş öneriler sunuyor. Siz değerlendirip 
+                        hastaya uygun planı oluşturuyorsunuz.
+                    </p>
+                </div>
+
+                <div class="scenario-box">
+                    <h3 style="margin-top: 0.5rem;">📋 Danışan Bilgileri</h3>
+                    <div class="grid-2" style="margin-top: 1rem;">
+                        <div>
+                            <p><strong>Ad:</strong> Ayşe K.</p>
+                            <p><strong>Yaş:</strong> 45</p>
+                            <p><strong>Boy/Kilo:</strong> 165 cm / 82 kg</p>
+                            <p><strong>BMI:</strong> 30.1 (Obez Sınıf I)</p>
+                            <p><strong>Meslek:</strong> Ofis çalışanı (sedanter)</p>
+                        </div>
+                        <div>
+                            <p><strong>Sağlık Durumu:</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>İnsülin direnci (prediabet)</li>
+                                <li>Hipotiroidi (Levotiroksin kullanıyor)</li>
+                                <li>Laktoz intoleransı</li>
+                            </ul>
+                            <p style="margin-top: 1rem;"><strong>Hedef:</strong> 3 ayda 8 kg vermek</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; color: var(--nutrition);">💬 Diyalog Simülasyonu</h3>
+                
+                <div class="dialogue-container">
+                    <div class="dialogue-message human">
+                        <div class="dialogue-label">👩‍⚕️ Diyetisyen (Siz)</div>
+                        45 yaşında kadın danışan. İnsülin direnci, hipotiroidi, laktoz intoleransı var. 
+                        BMI 30.1, hedef 3 ayda 8 kg vermek. Kişiselleştirilmiş bir beslenme planı öner.
+                    </div>
+                    
+                    <div class="dialogue-message ai">
+                        <div class="dialogue-label">🤖 AI Beslenme Asistanı</div>
+                        <strong>KİŞİSELLEŞTİRİLMİŞ ANALİZ:</strong>
+                        <br><br>
+                        <strong>Günlük Kalori Hedefi:</strong> 1400-1500 kcal (BMR x 1.2 - 500 kcal defisit)
+                        <br><br>
+                        <strong>Makro Dağılım (İnsülin Direnci Optimizasyonu):</strong>
+                        <br>• Protein: %30 (105g) — Tokluk + kas koruması
+                        <br>• Yağ: %35 (58g) — Sağlıklı yağlar
+                        <br>• Karbonhidrat: %35 (122g) — Düşük GI odaklı
+                        <br><br>
+                        <strong>Özel Dikkat Noktaları:</strong>
+                        <br>• Laktoz: Tüm süt ürünleri laktozsuz alternatiflerle değiştirildi
+                        <br>• Hipotiroidi: Soya ve gluten içeren besinler sabah saatlerine, ilaçtan 4 saat sonraya alındı
+                        <br>• İnsülin direnci: Rafine karbonhidratlar minimize edildi, lif ağırlıklı
+                    </div>
+                    
+                    <div class="dialogue-message human">
+                        <div class="dialogue-label">👩‍⚕️ Diyetisyen (Siz)</div>
+                        Güzel başlangıç. Ama danışanın iş yoğunluğu nedeniyle öğle yemeklerini dışarıda 
+                        yemesi gerekiyor. Pratik öğle yemeği önerileri verebilir misin?
+                    </div>
+                    
+                    <div class="dialogue-message ai">
+                        <div class="dialogue-label">🤖 AI Beslenme Asistanı</div>
+                        <strong>PRATİK ÖĞLE YEMEĞİ ÖNERİLERİ (Dışarıda Yemek):</strong>
+                        <br><br>
+                        <strong>Restoran/Cafe Seçenekleri:</strong>
+                        <br>• Izgara tavuk salata (sos ayrı) — ~350 kcal
+                        <br>• Mercimek çorbası + tam buğday ekmek — ~300 kcal
+                        <br>• Izgara balık + sebze garnitür — ~400 kcal
+                        <br><br>
+                        <strong>Hazırla-Götür Seçenekleri:</strong>
+                        <br>• Kinoa salatası (önceden hazırlanabilir)
+                        <br>• Yumurta + avokado wrap
+                        <br>• Ton balıklı salata (laktozsuz yoğurt sosuyla)
+                        <br><br>
+                        <strong>⚠️ Kaçınılması Gerekenler:</strong>
+                        <br>• Pilav/makarna ağırlıklı menüler
+                        <br>• Kızartmalar ve paneli ürünler
+                        <br>• Şekerli içecekler (su veya şekersiz çay tercih)
+                    </div>
+                    
+                    <div class="dialogue-message human">
+                        <div class="dialogue-label">👩‍⚕️ Diyetisyen (Siz)</div>
+                        Haftalık örnek bir menü çıkarabilir misin? Ayrıca hipotiroidi nedeniyle tiroid 
+                        fonksiyonunu destekleyecek besinleri de ekle.
+                    </div>
+                    
+                    <div class="dialogue-message ai">
+                        <div class="dialogue-label">🤖 AI Beslenme Asistanı</div>
+                        <strong>HAFTALIK ÖRNEK MENÜ:</strong>
+                        <br><br>
+                        <strong>PAZARTESİ:</strong>
+                        <br>☀️ Kahvaltı: 2 yumurta + avokado + çavdar ekmek (Levotiroksin'den 4 saat sonra)
+                        <br>🌤️ Ara: 10 badem + 1 elma
+                        <br>☀️ Öğle: Izgara tavuk salata (zeytinyağı-limon)
+                        <br>🌤️ Ara: Laktozsuz yoğurt + tarçın
+                        <br>🌙 Akşam: Fırında somon + brokoli + tatlı patates
+                        <br><br>
+                        <strong>TİROİD DESTEKLEYEN BESİNLER (Menüye Entegre):</strong>
+                        <br>• Selenyum: Brezilya fıstığı (haftada 3), deniz ürünleri
+                        <br>• Çinko: Kabak çekirdeği, et, yumurta
+                        <br>• İyot: Deniz balıkları (haftada 2-3)
+                        <br>• D Vitamini: Yumurta sarısı, mantar
+                        <br><br>
+                        <em>⚠️ Not: Guatrojenik besinler (lahana, brokoli) pişirilerek tüketilmeli ve aşırıya kaçılmamalı.</em>
+                    </div>
+                </div>
+
+                <div class="timer-box">
+                    <h3>⏱️ Şimdi Sıra Sizde: Role-Play Zamanı!</h3>
+                    <div class="timer-display" id="nutrition-timer">10:00</div>
+                    <div class="timer-buttons">
+                        <button class="btn btn-primary" onclick="startTimer('nutrition', 600)">▶️ Başlat</button>
+                        <button class="btn btn-outline" onclick="resetTimer('nutrition', 600)">🔄 Sıfırla</button>
+                    </div>
+                </div>
+
+                <div class="card nutrition">
+                    <h3 class="card-title">✍️ Aktivite: Kendi Danışanınızı Oluşturun</h3>
+                    <p>Aşağıdaki prompt'u kullanarak kendi senaryonuzu deneyin:</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this, 'nutrition-prompt')">📋 Kopyala</button>
+                        <pre id="nutrition-prompt">Sen bir AI destekli beslenme planlama asistanısın. Görevin:
+1. Danışan profiline göre kişiselleştirilmiş beslenme planı oluşturmak
+2. Sağlık durumlarını (diyabet, alerjiler, intoleranslar) dikkate almak
+3. Pratik ve uygulanabilir öneriler sunmak
+4. Diyetisyenin sorularını yanıtlamak
+
+Danışan: 55 yaşında erkek
+Durum: Tip 2 Diyabet, Hipertansiyon, Gluten intoleransı
+Yaşam tarzı: Aktif (haftada 3 gün yürüyüş)
+Hedef: HbA1c değerini düşürmek, kan basıncını kontrol altına almak
+
+Lütfen kapsamlı bir beslenme planı öner.</pre>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <h3>✅ Öğrenme Çıktıları</h3>
+                    <ul class="check-list" style="margin-top: 1rem;">
+                        <li>AI'ın "collaborator" rolünü görmek (Model 3)</li>
+                        <li>Kişiselleştirmenin önemi: Tek beden herkese uymaz</li>
+                        <li>AI önerilerini mesleki bilgiyle değerlendirmek</li>
+                        <li>Danışan yaşam koşullarını plana entegre etmek</li>
+                    </ul>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-outline" onclick="showSection('pharmacy')">← Geri</button>
+                    <button class="btn btn-primary" onclick="showSection('nursing')">Hemşire + AI →</button>
+                </div>
+            </section>
+
+            <!-- NURSING ROLE-PLAY -->
+            <section id="nursing" class="section">
+                <div class="section-header">
+                    <span class="section-icon">🏥</span>
+                    <div>
+                        <h2 class="section-title">Role-Play #3: Hemşire + AI</h2>
+                        <p class="section-subtitle">Hasta Takip ve Early Warning Sistemi</p>
+                    </div>
+                </div>
+
+                <div class="info-box" style="background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%); border-color: var(--nursing);">
+                    <h3>🎭 Senaryo Özeti</h3>
+                    <p style="margin-top: 1rem;">
+                        Siz bir yoğun bakım hemşiresisiniz. AI destekli bir Early Warning Score (EWS) sistemi 
+                        kullanıyorsunuz. Sistem hastaların vital bulgularını sürekli izliyor ve bozulma 
+                        belirtilerini erken tespit ediyor.
+                    </p>
+                </div>
+
+                <div class="scenario-box">
+                    <h3 style="margin-top: 0.5rem;">📋 Hasta Bilgileri</h3>
+                    <div class="grid-2" style="margin-top: 1rem;">
+                        <div>
+                            <p><strong>Ad:</strong> Ali R.</p>
+                            <p><strong>Yaş:</strong> 58</p>
+                            <p><strong>Yatış Nedeni:</strong> Pnömoni</p>
+                            <p><strong>Yatış Süresi:</strong> 3. gün</p>
+                            <p><strong>Oda:</strong> 204-A</p>
+                        </div>
+                        <div>
+                            <p><strong>Önceki Vital Bulgular (08:00):</strong></p>
+                            <ul style="margin-left: 1.5rem;">
+                                <li>Tansiyon: 125/80 mmHg</li>
+                                <li>Nabız: 82/dk</li>
+                                <li>Solunum: 18/dk</li>
+                                <li>SpO2: 95%</li>
+                                <li>Ateş: 37.2°C</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card warning" style="margin-top: 2rem;">
+                    <h3 class="card-title">🚨 AI UYARI: Hasta Durumu Değişikliği</h3>
+                    <p style="font-size: 1.1rem; margin-top: 0.5rem;">
+                        <strong>Saat 14:30 — NEWS Skoru: 3 → 7 (Orta-Yüksek Risk)</strong>
+                    </p>
+                </div>
+
+                <h3 style="margin-top: 2rem; color: var(--nursing);">💬 Diyalog Simülasyonu</h3>
+                
+                <div class="dialogue-container">
+                    <div class="dialogue-message ai">
+                        <div class="dialogue-label">🤖 AI Early Warning Sistemi</div>
+                        🚨 <strong>UYARI — Oda 204-A, Hasta: Ali R.</strong>
+                        <br><br>
+                        <strong>NEWS Skoru Değişimi:</strong> 3 → 7 (son 6 saatte)
+                        <br><br>
+                        <strong>Güncel Vital Bulgular (14:30):</strong>
+                        <br>• Tansiyon: 98/62 mmHg ⬇️ (↓27 mmHg)
+                        <br>• Nabız: 112/dk ⬆️ (↑30/dk)
+                        <br>• Solunum: 26/dk ⬆️ (↑8/dk)
+                        <br>• SpO2: 89% ⬇️ (↓6%)
+                        <br>• Ateş: 38.9°C ⬆️ (↑1.7°C)
+                        <br><br>
+                        <strong>⚠️ Öneri:</strong> Sepsis Early Warning kriterlerini karşılıyor. Acil hekim bildirimi önerilir.
+                    </div>
+                    
+                    <div class="dialogue-message human">
+                        <div class="dialogue-label">👩‍⚕️ Hemşire (Siz)</div>
+                        Hastayı hemen değerlendireceğim. Sepsis protokolü için gerekli ilk adımları ve 
+                        doktora bildirmem gereken kritik bilgileri listele.
+                    </div>
+                    
+                    <div class="dialogue-message ai">
+                        <div class="dialogue-label">🤖 AI Early Warning Sistemi</div>
+                        <strong>SEPSİS PROTOKOLÜ — İLK ADIMLAR:</strong>
+                        <br><br>
+                        <strong>1. Hemen Yapılacaklar:</strong>
+                        <br>✓ Oksijen desteği başlat (hedef SpO2 >94%)
+                        <br>✓ IV erişim kontrol et / aç
+                        <br>✓ Laktat için kan örneği al
+                        <br>✓ Kan kültürü al (antibiyotik öncesi)
+                        <br><br>
+                        <strong>2. Doktora Bildirilecekler (SBAR Formatı):</strong>
+                        <br>• S (Situation): Hasta Ali R., pnömoni tanılı, vital bulgular kötüleşiyor
+                        <br>• B (Background): 58 yaş, 3. gün yatış, kronik hastalık yok
+                        <br>• A (Assessment): NEWS 7, sepsis şüphesi, hipotansiyon + taşikardi + hipoksi
+                        <br>• R (Recommendation): Acil değerlendirme, sıvı resüsitasyonu, antibiyotik revizyonu
+                        <br><br>
+                        <strong>3. Beklenen Orderlar:</strong>
+                        <br>• Bolus IV sıvı (30 mL/kg kristaloid)
+                        <br>• Geniş spektrumlu antibiyotik
+                        <br>• Laktat takibi (2 saat sonra)
+                    </div>
+                    
+                    <div class="dialogue-message human">
+                        <div class="dialogue-label">👩‍⚕️ Hemşire (Siz)</div>
+                        Doktoru aradım, geliyor. Bu arada hastanın son 24 saatlik trendini gösterebilir misin? 
+                        Bozulma ne zaman başladı?
+                    </div>
+                    
+                    <div class="dialogue-message ai">
+                        <div class="dialogue-label">🤖 AI Early Warning Sistemi</div>
+                        <strong>24 SAATLİK TREND ANALİZİ:</strong>
+                        <br><br>
+                        <strong>Dün 14:30:</strong> NEWS 2 (Düşük risk) — Stabil
+                        <br><strong>Dün 22:00:</strong> NEWS 2 (Düşük risk) — Stabil
+                        <br><strong>Bugün 06:00:</strong> NEWS 3 (Düşük risk) — Hafif ateş başlangıcı
+                        <br><strong>Bugün 10:00:</strong> NEWS 4 (Düşük-orta risk) — SpO2 düşmeye başladı
+                        <br><strong>Bugün 14:30:</strong> NEWS 7 (Orta-yüksek risk) — <span style="color: #ef4444;">Hızlı bozulma</span>
+                        <br><br>
+                        <strong>📊 Kritik Gözlem:</strong>
+                        <br>Bozulma sabah 06:00'da başlamış, ancak hızlanma son 4 saatte olmuş. 
+                        <br>Bu pattern "kompanse sepsis → dekompansasyon" ile uyumlu.
+                        <br><br>
+                        <em>💡 Öneri: Erken müdahale kritik. Her 30 dakikada vital takibi.</em>
+                    </div>
+                </div>
+
+                <div class="timer-box">
+                    <h3>⏱️ Şimdi Sıra Sizde: Role-Play Zamanı!</h3>
+                    <div class="timer-display" id="nursing-timer">10:00</div>
+                    <div class="timer-buttons">
+                        <button class="btn btn-primary" onclick="startTimer('nursing', 600)">▶️ Başlat</button>
+                        <button class="btn btn-outline" onclick="resetTimer('nursing', 600)">🔄 Sıfırla</button>
+                    </div>
+                </div>
+
+                <div class="card nursing">
+                    <h3 class="card-title">✍️ Aktivite: Kendi Senaryonuzu Oluşturun</h3>
+                    <p>Aşağıdaki prompt'u kullanarak farklı bir senaryo deneyin:</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this, 'nursing-prompt')">📋 Kopyala</button>
+                        <pre id="nursing-prompt">Sen bir hastane AI Early Warning sistemsin. Görevin:
+1. Hastaların vital bulgularını sürekli izlemek
+2. NEWS (National Early Warning Score) hesaplamak
+3. Kritik değişimlerde hemşireyi uyarmak
+4. Trend analizi ve öneriler sunmak
+
+Hasta: 72 yaşında kadın
+Yatış nedeni: Kalp yetmezliği alevlenmesi
+Mevcut bulgular:
+- Tansiyon: 90/58 mmHg (önceki: 110/70)
+- Nabız: 48/dk (önceki: 72)
+- Solunum: 24/dk (önceki: 16)
+- SpO2: 88% (önceki: 94%)
+
+Bu değişimi analiz et ve hemşireye profesyonel bir uyarı ver.</pre>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <h3>✅ Öğrenme Çıktıları</h3>
+                    <ul class="check-list" style="margin-top: 1rem;">
+                        <li>AI'ın "supervisor" ve "early warning" rolü</li>
+                        <li>İnsan sezgisi + AI veri analizi kombinasyonu</li>
+                        <li>Kritik durumlarda hızlı karar verme desteği</li>
+                        <li>SBAR gibi standardize iletişim formatları</li>
+                    </ul>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-outline" onclick="showSection('nutrition')">← Geri</button>
+                    <button class="btn btn-primary" onclick="showSection('simulation')">Simülasyon →</button>
+                </div>
+            </section>
+
+            <!-- SIMULATION SECTION -->
+            <section id="simulation" class="section">
+                <div class="section-header">
+                    <span class="section-icon">🎭</span>
+                    <div>
+                        <h2 class="section-title">Simülasyon: Kendi Senaryonuzu Yazın</h2>
+                        <p class="section-subtitle">Hands-on: AI ile Gerçek Zamanlı Çalışma</p>
+                    </div>
+                </div>
+
+                <div class="info-box future">
+                    <h3>🎯 Bu Bölümün Amacı</h3>
+                    <p style="margin-top: 1rem;">
+                        Şimdi izleme modundan <strong>uygulama moduna</strong> geçiyoruz. Kendi meslek alanınızdan 
+                        bir senaryo seçecek ve AI ile gerçek bir işbirliği simülasyonu yapacaksınız.
+                    </p>
+                </div>
+
+                <h3 style="margin-top: 2rem; color: var(--primary);">📝 Adım 1: Senaryo Şablonu</h3>
+                
+                <div class="card scenario">
+                    <h3 class="card-title">🎭 Evrensel Senaryo Şablonu</h3>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this, 'scenario-template')">📋 Kopyala</button>
+                        <pre id="scenario-template">## FUTURE OF WORK SİMÜLASYONU
+
+### ROL TANIMI
+Sen bir [MESLEK] AI asistanısın. Görevin:
+1. [GÖREV 1]
+2. [GÖREV 2]
+3. [GÖREV 3]
+4. Profesyonelin sorularını yanıtlamak
+
+### SENARYO
+Durum: [DURUMU AÇIKLA]
+Hasta/Danışan: [PROFİL BİLGİLERİ]
+Problem: [ÇÖZÜLMESI GEREKEN SORUN]
+Kısıtlar: [VARSA ÖZEL DURUMLAR]
+
+### BENİM ROLÜM
+Ben bir [MESLEK] olarak seninle çalışıyorum. 
+Birlikte bu vakayı çözeceğiz.
+
+Şimdi analiz et ve önerilerini sun.</pre>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; color: var(--primary);">📝 Adım 2: Alana Özel Örnekler</h3>
+
+                <div class="grid-3">
+                    <div class="collapsible" onclick="toggleCollapsible(this)">
+                        <div class="collapsible-header">
+                            <span>💊 Eczacılık Senaryoları</span>
+                            <span class="collapsible-arrow">▼</span>
+                        </div>
+                        <div class="collapsible-content">
+                            <ul style="line-height: 2;">
+                                <li>Polifarmasi yönetimi (5+ ilaç)</li>
+                                <li>Pediatrik doz hesaplama</li>
+                                <li>Gebelikte ilaç güvenliği</li>
+                                <li>OTC ilaç danışmanlığı</li>
+                                <li>İlaç uyum takibi</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="collapsible" onclick="toggleCollapsible(this)">
+                        <div class="collapsible-header">
+                            <span>🥗 Beslenme Senaryoları</span>
+                            <span class="collapsible-arrow">▼</span>
+                        </div>
+                        <div class="collapsible-content">
+                            <ul style="line-height: 2;">
+                                <li>Sporcu beslenmesi planlaması</li>
+                                <li>Çoklu alerjili hasta</li>
+                                <li>Yeme bozukluğu sonrası</li>
+                                <li>Onkoloji hastası beslenmesi</li>
+                                <li>Vejetaryen geçiş planı</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="collapsible" onclick="toggleCollapsible(this)">
+                        <div class="collapsible-header">
+                            <span>🏥 Hemşirelik Senaryoları</span>
+                            <span class="collapsible-arrow">▼</span>
+                        </div>
+                        <div class="collapsible-content">
+                            <ul style="line-height: 2;">
+                                <li>Düşme riski değerlendirmesi</li>
+                                <li>Yara bakım protokolü</li>
+                                <li>Ağrı yönetimi planı</li>
+                                <li>Taburculuk eğitimi</li>
+                                <li>Çoklu kronik hastalık yönetimi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timer-box" style="margin-top: 2rem;">
+                    <h3>⏱️ SİMÜLASYON ZAMANI!</h3>
+                    <div class="timer-display" id="simulation-timer">15:00</div>
+                    <div class="timer-buttons">
+                        <button class="btn btn-primary" onclick="startTimer('simulation', 900)">▶️ Başlat</button>
+                        <button class="btn btn-outline" onclick="resetTimer('simulation', 900)">🔄 Sıfırla</button>
+                    </div>
+                    <p style="margin-top: 1rem; color: var(--text-gray);">
+                        ChatGPT veya Claude'u açın ve kendi senaryonuzu deneyin!
+                    </p>
+                </div>
+
+                <div class="card success" style="margin-top: 2rem;">
+                    <h3 class="card-title">✅ Simülasyon Değerlendirme Kriterleri</h3>
+                    <p>Simülasyonunuzu şu kriterlere göre değerlendirin:</p>
+                    <ul class="check-list" style="margin-top: 1rem;">
+                        <li><strong>Gerçekçilik:</strong> Senaryo mesleki pratiğe uygun mu?</li>
+                        <li><strong>AI Kullanımı:</strong> Doğru işbirliği modelini seçtiniz mi?</li>
+                        <li><strong>Kritik Düşünce:</strong> AI önerilerini sorguladınız mı?</li>
+                        <li><strong>Karar Alma:</strong> Son karar sizde mi kaldı?</li>
+                        <li><strong>Etik:</strong> Hasta/danışan güvenliği öncelikli mi?</li>
+                    </ul>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-outline" onclick="showSection('nursing')">← Geri</button>
+                    <button class="btn btn-primary" onclick="showSection('discussion')">Tartışma →</button>
+                </div>
+            </section>
+
+            <!-- DISCUSSION SECTION -->
+            <section id="discussion" class="section">
+                <div class="section-header">
+                    <span class="section-icon">💭</span>
+                    <div>
+                        <h2 class="section-title">Tartışma: İnsan mı, AI mı, İkisi Birlikte mi?</h2>
+                        <p class="section-subtitle">Eleştirel Düşünme ve Etik Sorular</p>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    "The question is not whether intelligent machines can have any emotions, 
+                    but whether machines can be intelligent without any emotions."
+                    <div class="quote-author">— Marvin Minsky</div>
+                </div>
+
+                <h3 style="margin-top: 2rem; color: var(--primary);">🔥 Tartışma Soruları</h3>
+
+                <div class="card" style="margin-top: 1.5rem;">
+                    <h3 class="card-title">Soru 1: Sorumluluk Kime Ait?</h3>
+                    <p style="margin-top: 1rem;">
+                        AI yanlış bir öneri verdi ve siz buna uyarak hastaya zarar verdiniz. 
+                        <strong>Sorumluluk kime ait?</strong>
+                    </p>
+                    <div class="grid-2" style="margin-top: 1rem;">
+                        <div class="role-card human">
+                            <h4>👤 Görüş A: İnsan Sorumlu</h4>
+                            <p>Son karar insanındı. AI sadece öneri sundu.</p>
+                        </div>
+                        <div class="role-card ai">
+                            <h4>🤖 Görüş B: Paylaşımlı Sorumluluk</h4>
+                            <p>AI geliştiricisi, kurum ve kullanıcı birlikte sorumlu.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 1.5rem;">
+                    <h3 class="card-title">Soru 2: AI'a Ne Kadar Güvenmeliyiz?</h3>
+                    <p style="margin-top: 1rem;">
+                        AI sisteminiz 10.000 vakada %99.5 doğruluk gösterdi. 
+                        <strong>Artık AI'ı sorgulamadan mı kabul etmeliyiz?</strong>
+                    </p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: #fef3c7; border-radius: 8px;">
+                        <strong>Düşünün:</strong> %0.5 hata = 50 hasta. Bu kabul edilebilir mi?
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 1.5rem;">
+                    <h3 class="card-title">Soru 3: Hangi Görevler AI'a Devredilmeli?</h3>
+                    <p style="margin-top: 1rem;">Aşağıdakileri sıralayın: AI'a tamamen devredilebilir → İnsan kontrolü şart</p>
+                    <ul style="margin-top: 1rem; line-height: 2; margin-left: 1.5rem;">
+                        <li>İlaç etkileşimi kontrolü</li>
+                        <li>Hasta anamnezi alma</li>
+                        <li>Tedavi kararı verme</li>
+                        <li>Randevu planlama</li>
+                        <li>Kötü haber verme</li>
+                        <li>Vital bulgu izleme</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="margin-top: 1.5rem;">
+                    <h3 class="card-title">Soru 4: "Deskilling" Riski</h3>
+                    <p style="margin-top: 1rem;">
+                        AI her şeyi hesaplıyorsa, profesyonellerin temel becerileri körelebilir mi?
+                        <strong>Bir gün AI çökerse ne olur?</strong>
+                    </p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: #fef2f2; border-radius: 8px;">
+                        <strong>Gerçek Örnek:</strong> GPS'e bağımlı şoförler harita okuyamıyor. 
+                        Aynısı sağlıkta olabilir mi?
+                    </div>
+                </div>
+
+                <div class="timer-box" style="margin-top: 2rem;">
+                    <h3>⏱️ Grup Tartışma Süresi</h3>
+                    <div class="timer-display" id="discussion-timer">15:00</div>
+                    <div class="timer-buttons">
+                        <button class="btn btn-primary" onclick="startTimer('discussion', 900)">▶️ Başlat</button>
+                        <button class="btn btn-outline" onclick="resetTimer('discussion', 900)">🔄 Sıfırla</button>
+                    </div>
+                </div>
+
+                <div class="info-box future" style="margin-top: 2rem;">
+                    <h3>💡 Hafta 7 Bağlantısı: Nietzsche Ne Derdi?</h3>
+                    <p style="margin-top: 1rem;">
+                        Geçen hafta Nietzsche'nin <strong>güç istenci</strong> kavramını tartıştık. 
+                        AI ile çalışmak güç kazanmak mı, güç kaybetmek mi? 
+                        <br><br>
+                        <em>"He who has a why to live can bear almost any how."</em> — AI "how"u kolaylaştırırsa, 
+                        "why"ımızı kaybeder miyiz?
+                    </p>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-outline" onclick="showSection('simulation')">← Geri</button>
+                    <button class="btn btn-primary" onclick="showSection('homework')">Ödev →</button>
+                </div>
+            </section>
+
+            <!-- HOMEWORK SECTION -->
+            <section id="homework" class="section">
+                <div class="section-header">
+                    <span class="section-icon">📚</span>
+                    <div>
+                        <h2 class="section-title">Bu Haftanın Ödevi</h2>
+                        <p class="section-subtitle">Personal AI Strategy: Geleceğe Hazırlanın</p>
+                    </div>
+                </div>
+
+                <div class="info-box future">
+                    <h3>🎯 Ödev: Kişisel AI Stratejisi Belgesi</h3>
+                    <p style="margin-top: 1rem; font-size: 1.1rem; line-height: 1.8;">
+                        Mezun olduktan sonraki ilk 5 yılınızı hayal edin. Mesleğinizde AI ile nasıl 
+                        çalışacağınıza dair <strong>kişisel bir strateji belgesi</strong> oluşturun.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">📋 Belge Yapısı (3-4 sayfa)</h3>
+                    <div class="code-block" style="margin-top: 1rem;">
+                        <button class="copy-btn" onclick="copyCode(this, 'homework-format')">📋 Kopyala</button>
+                        <pre id="homework-format">KİŞİSEL AI STRATEJİSİ BELGESİ
+
+1. GİRİŞ (0.5 sayfa)
+   • Mesleğiniz ve kariyer hedefleriniz
+   • AI'ın mesleğinizdeki mevcut durumu
+   • Bu belgenin amacı
+
+2. 5 YILLIK VİZYON (1 sayfa)
+   • 2030'da mesleğiniz nasıl görünecek?
+   • AI hangi görevleri üstlenecek?
+   • İnsan profesyoneller ne yapacak?
+   • Kendi rolünüzü nasıl görüyorsunuz?
+
+3. AI İŞBİRLİĞİ MODELİM (1 sayfa)
+   • Hangi görevlerde AI'ı "araç" olarak kullanacaksınız?
+   • Hangi görevlerde "ortak" olacak?
+   • Hangi görevlerde AI "denetleyici" olacak?
+   • Hangi görevleri ASLA AI'a devretmeyeceksiniz?
+
+4. BECERİ GELİŞTİRME PLANI (0.5-1 sayfa)
+   • AI ile çalışmak için hangi becerileri geliştirmelisiniz?
+   • Teknik beceriler (prompt engineering, veri okuma...)
+   • İnsan becerileri (empati, etik karar verme...)
+   • Öğrenme kaynakları ve zaman planı
+
+5. ETİK ÇERÇEVEm (0.5 sayfa)
+   • AI kullanımında kırmızı çizgileriniz
+   • Hasta/danışan güvenliği nasıl sağlanacak?
+   • Sorumluluk yaklaşımınız
+
+6. SONUÇ
+   • Özet ve taahhütleriniz
+   • "Ben bir [meslek] olarak AI ile şöyle çalışacağım..."</pre>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <div class="card pharmacy">
+                        <h3 class="card-title">💊 Eczacılık Örnek Başlıkları</h3>
+                        <ul style="margin-top: 1rem; line-height: 2;">
+                            <li>AI destekli ilaç danışmanlığı vizyonum</li>
+                            <li>Klinik eczacılıkta AI'ın rolü</li>
+                            <li>Hasta güvenliği ve AI denetimi</li>
+                        </ul>
+                    </div>
+                    <div class="card nutrition">
+                        <h3 class="card-title">🥗 Beslenme Örnek Başlıkları</h3>
+                        <ul style="margin-top: 1rem; line-height: 2;">
+                            <li>Kişiselleştirilmiş beslenme ve AI</li>
+                            <li>Danışan ilişkisinde insan dokunuşu</li>
+                            <li>Veri analizi ve beslenme planlaması</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card nursing" style="margin-top: 1rem;">
+                    <h3 class="card-title">🏥 Hemşirelik Örnek Başlıkları</h3>
+                    <ul style="margin-top: 1rem; line-height: 2;">
+                        <li>Early Warning sistemleri ve hemşirelik</li>
+                        <li>Bakım kalitesinde AI desteği</li>
+                        <li>Hasta iletişiminde insan merkezli yaklaşım</li>
+                    </ul>
+                </div>
+
+                <div class="info-box warning" style="margin-top: 2rem;">
+                    <h3>📤 Teslim Bilgileri</h3>
+                    <ul style="margin-top: 1rem; line-height: 2;">
+                        <li><strong>Format:</strong> PDF</li>
+                        <li><strong>Uzunluk:</strong> 3-4 sayfa (Times New Roman 12pt, 1.5 satır aralık)</li>
+                        <li><strong>İçerik:</strong> Yukarıdaki 6 bölüm + kaynakça</li>
+                        <li><strong>Tarih:</strong> Hafta 10 final sunumlarında kullanılacak</li>
+                        <li><strong>E-posta:</strong> ersin.gundeger@istun.edu.tr</li>
+                        <li><strong>Konu:</strong> [Adınız] - Hafta 8 Ödev - Kişisel AI Stratejisi</li>
+                    </ul>
+                </div>
+
+                <div class="card success" style="margin-top: 2rem;">
+                    <h3 class="card-title">💡 Yazarken İpuçları</h3>
+                    <ul class="check-list" style="margin-top: 1rem;">
+                        <li>Gerçekçi olun — 5 yıl sonrasını düşünün, 50 yıl değil</li>
+                        <li>Kendi alanınıza özgü örnekler verin</li>
+                        <li>Bugünkü dersten öğrendiklerinizi entegre edin</li>
+                        <li>Hem fırsatları hem riskleri dengeleyin</li>
+                        <li>Kişisel olun — bu SİZİN stratejiniz</li>
+                    </ul>
+                </div>
+
+                <div class="quote-box" style="margin-top: 2rem;">
+                    "The best way to predict the future is to create it."
+                    <div class="quote-author">— Peter Drucker</div>
+                </div>
+
+                <div class="section-nav">
+                    <button class="btn btn-outline" onclick="showSection('discussion')">← Geri</button>
+                    <button class="btn btn-secondary" onclick="showSection('intro')">🏠 Başa Dön</button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>🚀 Yapay Zeka ile Diyalog, Prompt Mühendisliği ve Eleştirel Düşünme</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">Hafta 8: Future of Work Simülasyonu</p>
+            <p style="margin-top: 1rem;">
+                👨‍🏫 <strong>Dr. Ersin Gündeğer</strong> | 
+                📧 <a href="mailto:ersin.gundeger@istun.edu.tr">ersin.gundeger@istun.edu.tr</a>
+            </p>
+            <div class="quote-box" style="max-width: 800px; margin: 2rem auto; font-size: 1rem;">
+                "The future of work is not about humans vs. machines. It's about humans with machines."
+                <div class="quote-author">— Ginni Rometty, Former IBM CEO</div>
+            </div>
+            <p style="margin-top: 1rem; opacity: 0.6; font-size: 0.9rem;">
+                İstanbul Sağlık ve Teknoloji Üniversitesi | 2024-2025 Güz Dönemi
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        let currentSection = 'intro';
+        const sections = ['intro', 'models', 'pharmacy', 'nutrition', 'nursing', 'simulation', 'discussion', 'homework'];
+        
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            currentSection = sectionId;
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function updateProgress() {
+            const sectionIndex = sections.indexOf(currentSection);
+            const progress = ((sectionIndex + 1) / sections.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        
+        const timers = {};
+        
+        function startTimer(id, seconds) {
+            if (timers[id]) clearInterval(timers[id].interval);
+            timers[id] = {
+                remaining: seconds,
+                interval: setInterval(() => {
+                    timers[id].remaining--;
+                    updateTimerDisplay(id);
+                    if (timers[id].remaining <= 0) {
+                        clearInterval(timers[id].interval);
+                        alert('⏰ Süre doldu!');
+                    }
+                }, 1000)
+            };
+        }
+        
+        function resetTimer(id, seconds) {
+            if (timers[id]) clearInterval(timers[id].interval);
+            timers[id] = { remaining: seconds };
+            updateTimerDisplay(id);
+        }
+        
+        function updateTimerDisplay(id) {
+            const minutes = Math.floor(timers[id].remaining / 60);
+            const seconds = timers[id].remaining % 60;
+            document.getElementById(id + '-timer').textContent = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+        
+        function copyCode(button, codeId) {
+            const code = document.getElementById(codeId).textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '✓ Kopyalandı!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = '📋 Kopyala';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function toggleCollapsible(element) {
+            element.classList.toggle('open');
+        }
+        
+        // Initialize timers
+        updateProgress();
+        resetTimer('intro', 7200);
+        resetTimer('pharmacy', 600);
+        resetTimer('nutrition', 600);
+        resetTimer('nursing', 600);
+        resetTimer('simulation', 900);
+        resetTimer('discussion', 900);
+    </script>
+</body>
+</html>
